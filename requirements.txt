@@ -1,0 +1,7 @@
+### Requirements ###
+
+numpy
+ipykernel
+jupyter
+pytest
+black
