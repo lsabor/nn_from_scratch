@@ -9,6 +9,7 @@ ipykernel = "*"
 jupyter = "*"
 pytest = "*"
 black = "*"
+pandas = "*"
 
 [dev-packages]
 

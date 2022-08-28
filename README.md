@@ -12,4 +12,4 @@ inspiration comes from Samson Zhang: https://www.youtube.com/watch?v=w8yWXqWQYmU
 To install necessary components:  
 `pip install -r requirements.txt`  
 or  
-`pipnev install -r requirements.txt`  
+`pipnev install --dev`  
