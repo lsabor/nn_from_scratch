@@ -13,6 +13,7 @@ class Loss:
 
     name = ...
     equation = ...
+    out_shape = (1,)  # returns a constant
 
     def __init__(self, Y):
         self.Y = np.array(Y)
