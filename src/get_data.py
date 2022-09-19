@@ -44,10 +44,6 @@ def import_mnist():
     n = n_test
     m = m_test + m_train
 
-    # normalize pixel data to values between 0 and 1. Max = 255, min = 0, thus divide by 255
-    X_train = X_train / 255.0
-    X_test = X_test / 255.0
-
     """making sure that our Y_test/Y_train are actually labels"""
 
     assert Y_test.max() == 9
