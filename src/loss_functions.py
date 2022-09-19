@@ -38,7 +38,7 @@ class CrossEntropy(Loss):
         targeted_Y_hat = np.sum(Y_hat_clipped * self.Y, axis=1)
         return np.mean(-np.log(targeted_Y_hat))
 
-    def deriv_loss(self, Y_hat):
+    def deriv(self, Y_hat):
         """
         returns how self.loss changes with regards to a change in each value in Y_hat
 
@@ -47,9 +47,9 @@ class CrossEntropy(Loss):
         """
         return -np.mean(self.Y / Y_hat, axis=1)
 
-    def deriv(self, Y_hat):
+    def deriv_loss(self, Y_hat):
         """
         since loss is it's return
-        deriv == deriv_loss
+        deriv_loss == deriv
         """
-        return self.deriv_loss(Y_hat)
+        return self.deriv(Y_hat)
