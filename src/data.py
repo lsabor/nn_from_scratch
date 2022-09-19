@@ -26,3 +26,33 @@ def get_labels_and_data_1st_column(data: np.array) -> Tuple[np.array, np.array]:
     Y = data[0]
     X = data[1:]
     return Y, X
+
+
+def import_mnist():
+
+    # DATA FROM HERE: https://pjreddie.com/projects/mnist-in-csv/
+    file_test = "../data/MNIST/mnist_test.csv"
+    file_train = "../data/MNIST/mnist_train.csv"
+
+    data_test, m_test, n_test = get_data_from_csv(file_test)
+    Y_test, X_test = get_labels_and_data_1st_column(data_test)
+
+    data_train, m_train, n_train = get_data_from_csv(file_train)
+    Y_train, X_train = get_labels_and_data_1st_column(data_train)
+
+    assert n_test == n_train
+    n = n_test
+    m = m_test + m_train
+
+    # normalize pixel data to values between 0 and 1. Max = 255, min = 0, thus divide by 255
+    X_train = X_train / 255.0
+    X_test = X_test / 255.0
+
+    """making sure that our Y_test/Y_train are actually labels"""
+
+    assert Y_test.max() == 9
+    assert Y_train.max() == 9
+    assert X_test[0].max() != 9
+    assert X_train[0].max() != 9
+
+    return X_train, Y_train, X_test, Y_test
