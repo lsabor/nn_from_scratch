@@ -2,7 +2,6 @@
 classes for a neural network
 """
 
-from typing import Iterable
 import numpy as np
 from activation_functions import ActivationLayer
 
@@ -94,12 +93,12 @@ class Network:
         vals[1] = Z0
         vals[0] = data
         """
-        # DLs = []
+        DLs = []
         dWs = []
         dbs = []
         last_layer = self.layers[1]
         DZ = last_layer.deriv_loss(vals[-1])
-        # DLs.append(DZ)
+        DLs.append(DZ)
 
         for index, layer in enumerate(self.layers[2:]):
 
@@ -109,7 +108,7 @@ class Network:
                 DW = layer.weights.deriv_loss(m=self.m, A=A, DZ=DZ)
                 Db = layer.biases.deriv_loss(m=self.m, DZ=DZ)
 
-                # DLs.append(DA)
+                DLs.append(DA)
                 dWs.append(DW)
                 dbs.append(Db)
 
@@ -117,8 +116,9 @@ class Network:
                 Z = vals[-index - 3]
                 dZ = layer.deriv(Z)
                 DZ = layer.deriv_loss(DA=DA, dZ=dZ)
-                # DLs.append(DZ)
+                DLs.append(DZ)
 
+        print("DLs:", DLs)
         return (dWs, dbs)
 
     def update(self, lr, dWs, dbs):

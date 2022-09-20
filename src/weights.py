@@ -15,7 +15,8 @@ class Weights:
     equation = "W dot A"
 
     def __init__(self, prev_size, next_size):
-        self.W = np.random.randn(next_size, prev_size)
+        # self.W = np.random.randn(next_size, prev_size)
+        self.W = np.random.rand(next_size, prev_size) - 0.5
 
     def apply(self, A):
         """
@@ -64,7 +65,8 @@ class Biases:
     equation = "Zw + b"
 
     def __init__(self, next_size):
-        self.b = np.random.randn(next_size, 1)
+        # self.b = np.random.randn(next_size, 1)
+        self.b = np.random.rand(next_size, 1) - 0.5
 
     def apply(self, Zw):
         """
