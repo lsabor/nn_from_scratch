@@ -97,17 +97,23 @@ class Network:
         dWs = []
         dbs = []
         last_layer = self.layers[1]
-        DZ = last_layer.deriv_loss(vals[-1])
+        Y_hat = vals[-1]
+        DZ = last_layer.deriv_loss(Y_hat)
         DLs.append(DZ)
+        print(f"{Y_hat  = }")
+        print(f"{DZ = }")
 
         for index, layer in enumerate(self.layers[2:]):
-
+            print(f"layer_index = {index+2}, {type(layer) = }")
             if isinstance(layer, Transformation):
                 A = vals[-index - 3]
                 DA = layer.deriv_loss(DZ)
                 DW = layer.weights.deriv_loss(m=self.m, A=A, DZ=DZ)
                 Db = layer.biases.deriv_loss(m=self.m, DZ=DZ)
-
+                print(f"{A  = }")
+                print(f"{DA = }")
+                print(f"{DW = }")
+                print(f"{Db = }")
                 DLs.append(DA)
                 dWs.append(DW)
                 dbs.append(Db)
@@ -115,10 +121,12 @@ class Network:
             elif isinstance(layer, ActivationLayer):
                 Z = vals[-index - 3]
                 dZ = layer.deriv(Z)
+                print(f"{Z  = }")
+                print("calculating DZ")
                 DZ = layer.deriv_loss(DA=DA, dZ=dZ)
+                print(f"{DZ = }")
                 DLs.append(DZ)
 
-        print("DLs:", DLs)
         return (dWs, dbs)
 
     def update(self, lr, dWs, dbs):

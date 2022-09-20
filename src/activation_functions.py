@@ -34,6 +34,8 @@ class ActivationLayer:
         DA = self.next.deriv_loss(self.apply(Z))
         dZ = self.deriv(Z)
         """
+        print(f"{self.name} - deriv_loss")
+        print(f"{dZ = }")
         return DA * dZ
 
 
@@ -121,6 +123,7 @@ class Softmax(ActivationLayer):
             dL/dZ2[j,k] = -Y[j,k] + Y_hat[j,k]
             (14)    DZ2{n,m} = -Y + Y_hat
             """
+            print(f"{self.name} - deriv_loss")
             return -self.next.Y + Y_hat
 
         raise NotImplementedError(

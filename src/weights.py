@@ -52,7 +52,7 @@ class Weights:
         during the training run. Namely m training examples:
         (15)    DW2{n,n} = 1/m * DZ2 * dZ2/dw2 = 1/m * DZ2{n,m} dot A1{n,m}.T{m,n}
         """
-        return 1 / m * np.dot(DZ, A.T)
+        return np.dot(DZ, A.T)  # / m
 
 
 class Biases:
@@ -102,7 +102,7 @@ class Biases:
         during the training run. Namely m training examples:
         (16)    Db2{n} = 1/m * DZ2 * dZ2/dw2 = 1/m * 1{n} dot DZ2{n,m} = 1/m * np.sum(DZ2{n,m})
         """
-        return 1 / m * np.sum(DZ, axis=1, keepdims=True)
+        return np.sum(DZ, axis=1, keepdims=True)  # / m
 
 
 class Transformation:
