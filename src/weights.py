@@ -15,7 +15,7 @@ class Weights:
     equation = "W dot A"
 
     def __init__(self, prev_size, next_size):
-        self.W = np.random.rand(next_size, prev_size)
+        self.W = np.random.randn(next_size, prev_size)
 
     def apply(self, A):
         """
@@ -64,7 +64,7 @@ class Biases:
     equation = "Zw + b"
 
     def __init__(self, next_size):
-        self.b = np.random.rand(next_size)
+        self.b = np.random.randn(next_size, 1)
 
     def apply(self, Zw):
         """
@@ -100,7 +100,7 @@ class Biases:
         during the training run. Namely m training examples:
         (16)    Db2{n} = 1/m * DZ2 * dZ2/dw2 = 1/m * 1{n} dot DZ2{n,m} = 1/m * np.sum(DZ2{n,m})
         """
-        return 1 / m * np.sum(DZ)
+        return 1 / m * np.sum(DZ, axis=1, keepdims=True)
 
 
 class Transformation:

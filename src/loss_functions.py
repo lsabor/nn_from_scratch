@@ -35,7 +35,7 @@ class CrossEntropy(Loss):
 
     def loss(self, Y_hat):
         Y_hat_clipped = np.clip(Y_hat, 1e-7, 1)  # to remove errors when estimate is 0
-        targeted_Y_hat = np.sum(Y_hat_clipped * self.Y, axis=1)
+        targeted_Y_hat = np.sum(Y_hat_clipped * self.Y, axis=0)
         return np.mean(-np.log(targeted_Y_hat))
 
     def deriv(self, Y_hat):

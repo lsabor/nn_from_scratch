@@ -30,8 +30,8 @@ class ActivationLayer:
         """
         returns the derivative matrix of Loss with respect to input to ReLU Z
         - override this if there is a mathematical shortcut or is not caluclated element-wise
-        - is element-wise multiplication by default because activate() is usually element-wise
-        DA = self.next.deriv_loss(self.activate(Z))
+        - is element-wise multiplication by default because apply() is usually element-wise
+        DA = self.next.deriv_loss(self.apply(Z))
         dZ = self.deriv(Z)
         """
         return DA * dZ
@@ -47,21 +47,22 @@ class Softmax(ActivationLayer):
     name = "Softmax"
     equation = "e^Z[i] / sum_i(e^Z)"
 
-    def activate(self, Z: np.array):
+    def apply(self, Z: np.array):
         """
         returns the softmax array of Z
         called Y_hat since only used at termination of nerual net
         """
+        # TODO: reapply stabilizing
         # collapses 1 dim of array
-        max_Z = np.amax(Z, 1).reshape(Z.shape[0], 1)  # Get the row-wise maximum
+        max_Z = np.amax(Z, axis=0).reshape(1, Z.shape[1])  # Get the column-wise maximum
         eZ = np.exp(Z - max_Z)  # For stability
-        return eZ / eZ.sum(axis=1, keepdims=True)
+        return eZ / eZ.sum(axis=0, keepdims=True)
 
     def deriv(self, Y_hat):
         """
         returns a derivative matrix of how each value in Z effects
         each value in A
-        A = self.activate(Z)
+        A = self.apply(Z)
         """
         """
         dY_hat/dZ2:  
@@ -96,7 +97,7 @@ class Softmax(ActivationLayer):
         """
         returns the derivative matrix of Loss with respect to input to softmax Z
         - currently only supports loss == CrossEntropy
-        Y_hat = self.activate(Z)
+        Y_hat = self.apply(Z)
         """
         if isinstance(self.next, CrossEntropy):
             """
@@ -137,7 +138,7 @@ class ReLU(ActivationLayer):
     name = "Rectified Linear Unit"
     equation = "max(Z[i], 0)"
 
-    def activate(self, Z: np.array):
+    def apply(self, Z: np.array):
         """rectified linear unit activation function"""
         return np.maximum(Z, 0)
 
